@@ -99,6 +99,47 @@
 <!--1.使用bootstrapTable将json数据渲染到页面-->
 <script>
 
+    function findSubjectFn() {
+        $("#table_subject").bootstrapTable({
+            url:"/sub/getSubjectList",
+            type:"GET",
+            dataType:"json",
+            pagination:true,        //是否进行分页
+            search:true,            //是否有搜索框
+            showRefresh:true,       //是否有刷新按钮
+            pageSize:5,             //初始化每页显示几条数据，这里我们显示5
+            pageList:[1,2,3,4,5],   //每页显示数据选择
+            columns:[
+                {
+                    field:"subjectNo",
+                    title:"科目编号",
+                    align:"center",
+                    valign:"middle",
+                    searchable:true
+                }, {
+                    field:"subjectName",
+                    title:"科目名称",
+                    align:"center",
+                    valign:"middle",
+                    searchable:true
+                }, {
+                    field:"classHour",
+                    title:"课时",
+                    align:"center",
+                    valign:"middle",
+                    searchable:true
+                }, {
+                    field:"gradeName",
+                    title:"年级",
+                    align:"center",
+                    valign:"middle",
+                    searchable:true
+                }
+            ]
+        })
+    }
+
+    findSubjectFn();
 
 
 </script>
@@ -109,7 +150,28 @@
 
 <!--3.对添加，保存，编辑，取消编辑，删除，全部删除进行对应的操作-->
 <script>
-   
+
+    $(function () {
+        $("#addSubject").on("click",function () {
+            var subjectName = $("#subName").val();
+            var hours = $("#hours").val();
+            var gradeID = $("#gradeID").val();
+            $.ajax({
+                url:"/sub/addSubject",
+                data:{
+                    subjectName:subjectName,
+                    hours:hours,
+                    gradeID:gradeID
+                },
+                success:function (data) {
+                    alert(data);
+                    window.location.reload();
+                }
+            })
+        })
+    })
+
+
 </script>
 
 </html>
